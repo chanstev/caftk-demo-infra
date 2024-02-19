@@ -4,8 +4,8 @@ resource "random_string" "random" {
 }
 
 resource "oci_identity_compartment" "caftk-compartment" {
-    # Required
-    compartment_id = var.compartment_ocid
+    # Default to root compartment unless specified var.compartment_ocid
+    compartment_id = var.compartment_ocid == null ? var.tenancy_ocid : var.compartment_ocid
     description = "Compartment for CAF Toolkit"
     name = "cpm_caftk_${random_string.random}"
 }
